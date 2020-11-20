@@ -1,4 +1,4 @@
-# Якого прутня JavaScript?
+# Шо за прутня JavaScript?
 
 [![WTFPL 2.0][license-image]][license-url]
 [![NPM version][npm-image]][npm-url]
@@ -54,9 +54,9 @@ $ npm install -g wtfjs
   - [true є false](#true-is-false)
   - [baNaNa](#banana)
   - [`NaN` не є `NaN`](#nan-is-not-a-nan)
-  - [It's a fail](#its-a-fail)
-  - [`[]` is truthy, but not `true`](#-is-truthy-but-not-true)
-  - [`null` is falsy, but not `false`](#null-is-falsy-but-not-false)
+  - [Це фейл](#its-a-fail)
+  - [`[]` є правдивим, але не `true`](#-is-truthy-but-not-true)
+  - [`null` є хибним, але не `false`](#null-is-falsy-but-not-false)
   - [`document.all` is an object, but it is undefined](#documentall-is-an-object-but-it-is-undefined)
   - [Minimal value is greater than zero](#minimal-value-is-greater-than-zero)
   - [function is not a function](#function-is-not-a-function)
@@ -296,7 +296,7 @@ NaN === NaN; // -> false
 >
 > &mdash; [“What is the rationale for all comparisons returning false for IEEE754 NaN values?”](https://stackoverflow.com/questions/1565164/1573715#1573715) на StackOverflow
 
-## Це невдача
+## Це фейл
 
 Ви б не повірили, але …
 
