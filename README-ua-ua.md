@@ -69,13 +69,13 @@ $ npm install -g wtfjs
   - [Коментарі HTML дійсні в JavaScript](#html-comments-are-valid-in-javascript)
   - [`NaN` ~~не~~ є числом](#nan-is-not-a-number)
   - [`[]` і `null` - це об'єкти](#-and-null-are-objects)
-  - [Magically increasing numbers](#magically-increasing-numbers)
-  - [Precision of `0.1 + 0.2`](#precision-of-01--02)
-  - [Patching numbers](#patching-numbers)
-  - [Comparison of three numbers](#comparison-of-three-numbers)
-  - [Funny math](#funny-math)
-  - [Addition of RegExps](#addition-of-regexps)
-  - [Strings aren't instances of `String`](#strings-arent-instances-of-string)
+  - [Чарівним способом збільшується кількість](#magically-increasing-numbers)
+  - [Точність `0,1 + 0,2`](#precision-of-01--02)
+  - [Виправлення чисел](#patching-numbers)
+  - [Порівняння трьох чисел](#comparison-of-three-numbers)
+  - [Кумедні обчислення](#funny-math)
+  - [Додавання RegExps](#addition-of-regexps)
+  - [Строки не є екземплярами `String`](#strings-arent-instances-of-string)
   - [Calling functions with backticks](#calling-functions-with-backticks)
   - [Call call call](#call-call-call)
   - [A `constructor` property](#a-constructor-property)
@@ -659,9 +659,7 @@ Number(true); // -> 1
 
 ### 💡 Пояснення:
 
-Impressed? HTML-like comments were intended to allow browsers that didn't understand the `<script>` tag to degrade gracefully. These browsers, e.g. Netscape 1.x are no longer popular. So there is really no point in putting HTML comments in your script tags anymore.
-
-Вражені? Коментарі, подібні до HTML, мали на меті дозволити браузерам, які не розуміли тег <script>, витончено деградувати. Ці браузери, напр. Netscape 1.x більше не популярниі. Тож насправді більше немає сенсу розміщувати коментарі HTML у тегах скриптів.
+Вражені? Коментарі, подібні до HTML, мали на меті дозволити браузерам, які не розуміли тег `<script>`, витончено деградувати. Ці браузери, напр. Netscape 1.x більше не популярниі. Тож насправді більше немає сенсу розміщувати коментарі HTML у тегах скриптів.
 
 Оскільки Node.js базується на механізмі V8, HTML-подібні коментарі також підтримуються середовищем виконання Node.js. Більше того, вони є частиною специфікації:
 
@@ -698,9 +696,9 @@ null instanceof Object; // false
 
 - [**12.5.5** The `typeof` Operator](https://www.ecma-international.org/ecma-262/#sec-typeof-operator)
 
-According to the specification, the `typeof` operator returns a string according to [Table 35: `typeof` Operator Results](https://www.ecma-international.org/ecma-262/#table-35). For `null`, ordinary, standard exotic and non-standard exotic objects, which do not implement `[[Call]]`, it returns the string `"object"`.
+Відповідно до специфікації, оператор `typeof` повертає строку відповідно до [Table 35: `typeof` Operator Results](https://www.ecma-international.org/ecma-262/#table-35). Для `null`, звичайних, стандартних екзотичних та нестандартних екзотичних об'єктів, які не реалізують`[[Call]]`, він повертає строку `"object "`.
 
-However, you can check the type of an object by using the `toString` method.
+Однак ви можете перевірити тип об'єкта, використовуючи метод `toString`.
 
 ```js
 Object.prototype.toString.call([]);
@@ -713,7 +711,7 @@ Object.prototype.toString.call(null);
 // -> '[object Null]'
 ```
 
-## Magically increasing numbers
+## Чарівним способом збільшується кількість
 
 ```js
 999999999999999; // -> 999999999999999
@@ -726,14 +724,14 @@ Object.prototype.toString.call(null);
 
 ### 💡 Пояснення:
 
-This is caused by IEEE 754-2008 standard for Binary Floating-Point Arithmetic. At this scale, it rounds to the nearest even number. Read more:
+Це спричинено стандартом IEEE 754-2008 для двійкової арифметики з плаваючою крапкою. У цьому масштабі він округляється до найближчого парного числа. Детальніше:
 
 - [**6.1.6** The Number Type](https://www.ecma-international.org/ecma-262/#sec-ecmascript-language-types-number-type)
 - [IEEE 754](https://en.wikipedia.org/wiki/IEEE_754) on Wikipedia
 
-## Precision of `0.1 + 0.2`
+## Точність `0,1 + 0,2`
 
-A well-known joke. An addition of `0.1` and `0.2` is deadly precise:
+Загальновідомий "прикол". Додавання `0,1` та` 0,2` є супер точним:
 
 ```js
 0.1 +
@@ -746,15 +744,15 @@ A well-known joke. An addition of `0.1` and `0.2` is deadly precise:
 
 ### 💡 Пояснення:
 
-The answer for the [”Is floating point math broken?”](https://stackoverflow.com/questions/588004/is-floating-point-math-broken) question on StackOverflow:
+Відповідь на [”Is floating point math broken?”](https://stackoverflow.com/questions/588004/is-floating-point-math-broken) питання на StackOverflow:
 
-> The constants `0.2` and `0.3` in your program will also be approximations to their true values. It happens that the closest `double` to `0.2` is larger than the rational number `0.2` but that the closest `double` to `0.3` is smaller than the rational number `0.3`. The sum of `0.1` and `0.2` winds up being larger than the rational number `0.3` and hence disagreeing with the constant in your code.
+> Константи `0,2` та `0,3` у вашій програмі також будуть наближеними до їх справжніх значень. Трапляється, що найближче до `0.2` значення `double` перевищує раціональне число `0.2`, але найближче `double` до `0,3` менше раціонального числа `0,3`. Сума `0,1` і `0,2` перетворюється на більшу, ніж раціональне число `0,3`, і, отже, не погоджується з константою у вашому коді.
 
-This problem is so known that there is even a website called [0.30000000000000004.com](http://0.30000000000000004.com/). It occurs in every language that uses floating-point math, not just JavaScript.
+Ця проблема настільки відома, що існує навіть веб-сайт під назвою [0.30000000000000004.com](http://0.30000000000000004.com/). Це відбувається у кожній мові, яка використовує обчислення з плаваючою комою, а не лише у JavaScript.
 
-## Patching numbers
+## Виправлення чисел
 
-You can add your own methods to wrapper objects like `Number` or `String`.
+Ви можете додати власні методи до обгорткових об'єктів, таких як `Number` або `String`.
 
 ```js
 Number.prototype.isOne = function () {
@@ -775,9 +773,11 @@ Number.prototype.isOne = function () {
 
 Obviously, you can extend the `Number` object like any other object in JavaScript. However, it's not recommended if the behavior of the defined method is not a part of the specification. Here is the list of `Number`'s properties:
 
+Очевидно, що ви можете розширити об'єкт `Number` як будь-який інший об'єкт у JavaScript. Однак це не рекомендується, якщо поведінка визначеного методу не є частиною специфікації. Ось список властивостей `Number`:
+
 - [**20.1** Number Objects](https://www.ecma-international.org/ecma-262/#sec-number-objects)
 
-## Comparison of three numbers
+## Порівняння трьох чисел
 
 ```js
 1 < 2 < 3; // -> true
@@ -786,7 +786,7 @@ Obviously, you can extend the `Number` object like any other object in JavaScrip
 
 ### 💡 Пояснення:
 
-Why does this work that way? Well, the problem is in the first part of an expression. Here's how it works:
+Чому це так працює? Ну, проблема в першій частині виразу. Ось як це працює:
 
 ```js
 1 < 2 < 3; // 1 < 2 -> true
@@ -798,19 +798,19 @@ true > 1; // true -> 1
 1 > 1; // -> false
 ```
 
-We can fix this with _Greater than or equal operator (`>=`)_:
+Ми можемо це виправити за допомогою оператора _Оператор більше чи дорівнює (`>=`)_:
 
 ```js
 3 > 2 >= 1; // true
 ```
 
-Read more about Relational operators in the specification:
+Детальніше про реляційні оператори читайте у специфікації:
 
 - [**12.10** Relational Operators](https://www.ecma-international.org/ecma-262/#sec-relational-operators)
 
-## Funny math
+## Кумедні обчислення
 
-Often the results of arithmetic operations in JavaScript might be quite unexpected. Consider these examples:
+Часто результати арифметичних операцій у JavaScript можуть бути зовсім несподіваними. Розглянемо ці приклади:
 
 ```js
  3  - 1  // -> 2
@@ -833,7 +833,7 @@ Often the results of arithmetic operations in JavaScript might be quite unexpect
 
 ### 💡 Пояснення:
 
-What's happening in the first four examples? Here's a small table to understand addition in JavaScript:
+Що відбувається в перших чотирьох прикладах? Ось невелика таблиця, щоб зрозуміти додавання в JavaScript:
 
 ```
 Number  + Number  -> addition
@@ -844,13 +844,15 @@ String  + Boolean -> concatenation
 String  + String  -> concatenation
 ```
 
-What about other examples? A `ToPrimitive` and `ToString` methods are being implicitly called for `[]` and `{}` before addition. Read more about evaluation process in the specification:
+А як щодо інших прикладів? Методи `ToPrimitive` та `ToString` неявно викликаються для `[]` і `{}`перед додаванням. Детальніше читайте у специфікації:
 
 - [**12.8.3** The Addition Operator (`+`)](https://www.ecma-international.org/ecma-262/#sec-addition-operator-plus)
 - [**7.1.1** ToPrimitive(`input` [,`PreferredType`])](https://www.ecma-international.org/ecma-262/#sec-toprimitive)
 - [**7.1.12** ToString(`argument`)](https://www.ecma-international.org/ecma-262/#sec-tostring)
 
 Notably, `{} + []` here is the exception. The reason why it differs from `[] + {}` is that, without parenthesis, it is interpreted as a code block and then a unary +, converting `[]` into a number. It sees the following:
+
+Примітно, що `{} + []` тут є винятком. Причина, по якій він відрізняється від `[] + {}`, полягає в тому, що без дужок він інтерпретується як блок коду, а потім одинарний +, перетворюючи `[]` у число. Він бачить наступне:
 
 ```js
 {
@@ -859,15 +861,15 @@ Notably, `{} + []` here is the exception. The reason why it differs from `[] + {
 +[]; // -> 0
 ```
 
-To get the same output as `[] + {}` we can wrap it in parenthesis.
+Щоб отримати такий самий результат, як `[] + {}`, ми можемо обернути його в дужки.
 
 ```js
 ({} + []); // -> [object Object]
 ```
 
-## Addition of RegExps
+## Додавання RegExps
 
-Did you know you can add numbers like this?
+Чи знали ви, що можете додавати такі числа?
 
 ```js
 // Patch a toString method
@@ -883,7 +885,7 @@ RegExp.prototype.toString =
 
 - [**21.2.5.10** get RegExp.prototype.source](https://www.ecma-international.org/ecma-262/#sec-get-regexp.prototype.source)
 
-## Strings aren't instances of `String`
+## Строки не є екземплярами `String`
 
 ```js
 "str"; // -> 'str'
@@ -893,7 +895,7 @@ typeof "str"; // -> 'string'
 
 ### 💡 Пояснення:
 
-The `String` constructor returns a string:
+Конструктор `String` повертає рядок:
 
 ```js
 typeof String("str"); // -> 'string'
@@ -901,20 +903,20 @@ String("str"); // -> 'str'
 String("str") == "str"; // -> true
 ```
 
-Let's try with a `new`:
+Спробуємо з `new`:
 
 ```js
 new String("str") == "str"; // -> true
 typeof new String("str"); // -> 'object'
 ```
 
-Object? What's that?
+Об'єкт? Що це?
 
 ```js
 new String("str"); // -> [String: 'str']
 ```
 
-More information about the String constructor in the specification:
+Більше інформації про конструктор String у специфікації
 
 - [**21.1.1** The String Constructor](https://www.ecma-international.org/ecma-262/#sec-string-constructor)
 
