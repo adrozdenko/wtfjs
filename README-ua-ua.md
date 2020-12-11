@@ -920,9 +920,11 @@ new String("str"); // -> [String: 'str']
 
 - [**21.1.1** The String Constructor](https://www.ecma-international.org/ecma-262/#sec-string-constructor)
 
-## Calling functions with backticks
+## Виклик функцій із зворотними позначками
 
 Let's declare a function which logs all params into the console:
+
+Давайте оголосимо функцію, яка виведе всі параметри в консоль:
 
 ```js
 function f(...args) {
@@ -930,13 +932,13 @@ function f(...args) {
 }
 ```
 
-No doubt, you know you can call this function like this:
+Без сумніву, ви знаєте, що цю функцію можна викликати так:
 
 ```js
 f(1, 2, 3); // -> [ 1, 2, 3 ]
 ```
 
-But did you know you can call any function with backticks?
+Але чи знаєте ви, що можете викликати будь-яку функцію із зворотними позначками?
 
 ```js
 f`true is ${true}, false is ${false}, array is ${[1, 2, 3]}`;
@@ -948,7 +950,7 @@ f`true is ${true}, false is ${false}, array is ${[1, 2, 3]}`;
 
 ### 💡 Пояснення:
 
-Well, this is not magic at all if you're familiar with _Tagged template literals_. In the example above, `f` function is a tag for template literal. Tags before template literal allow you to parse template literals with a function. The first argument of a tag function contains an array of string values. The remaining arguments are related to the expressions. Example:
+Ну, це зовсім не магія, якщо ви знайомі з _Tagged literal template_. У наведеному вище прикладі функція `f` є тегом для літералу шаблону. Теги перед літералом шаблону дозволяють аналізувати літерали шаблонів за допомогою функції. Перший аргумент функції тегу містить масив рядків. Решта аргументів пов’язані з виразами. Приклад:
 
 ```js
 function template(strings, ...keys) {
@@ -956,15 +958,15 @@ function template(strings, ...keys) {
 }
 ```
 
-This is the [magic behind](http://mxstbr.blog/2016/11/styled-components-magic-explained/) famous library called [💅 styled-components](https://www.styled-components.com/), which is popular in the React community.
+Це [magic behind](http://mxstbr.blog/2016/11/styled-components-magic-explained/) відома бібліотека під назвою [💅 styled-components](https://www.styled-components.com/), яка є популярною у спільноті React.
 
-Link to the specification:
+Посилання на специфікацію:
 
 - [**12.3.7** Tagged Templates](https://www.ecma-international.org/ecma-262/#sec-tagged-templates)
 
-## Call call call
+## Виклик виклик виклик
 
-> Found by [@cramforce](http://twitter.com/cramforce)
+> Знайдено [@cramforce](http://twitter.com/cramforce)
 
 ```js
 console.log.call.call.call.call.call.apply((a) => a, [1, 2]);
@@ -972,12 +974,12 @@ console.log.call.call.call.call.call.apply((a) => a, [1, 2]);
 
 ### 💡 Пояснення:
 
-Attention, it could break your mind! Try to reproduce this code in your head: we're applying the `call` method using the `apply` method. Read more:
+Увага, це може зламати вам голову! Спробуйте відтворити цей код у своїй голові: ми застосовуємо метод `call` за допомогою методу` apply`. Детальніше:
 
 - [**19.2.3.3** Function.prototype.call(`thisArg`, ...`args`)](https://www.ecma-international.org/ecma-262/#sec-function.prototype.call)
 - [**19.2.3.1 ** Function.prototype.apply(`thisArg`, `argArray`)](https://www.ecma-international.org/ecma-262/#sec-function.prototype.apply)
 
-## A `constructor` property
+## Властивість `constructor`
 
 ```js
 const c = "constructor";
@@ -986,7 +988,7 @@ c[c][c]('console.log("WTF?")')(); // > WTF?
 
 ### 💡 Пояснення:
 
-Let's consider this example step-by-step:
+Давайте розглянемо цей приклад поетапно:
 
 ```js
 // Declare a new constant which is a string 'constructor'
@@ -1010,12 +1012,12 @@ c[c][c]('console.log("WTF?")'); // -> [Function: anonymous]
 c[c][c]('console.log("WTF?")')(); // > WTF?
 ```
 
-An `Object.prototype.constructor` returns a reference to the `Object` constructor function that created the instance object. In case with strings it is `String`, in case with numbers it is `Number` and so on.
+`Object.prototype.constructor` повертає посилання на функцію конструктора `Object`, яка створила об'єкт екземпляра. У випадку з рядками це `String`, у випадку з числами це `Number` і тд.
 
-- [`Object.prototype.constructor`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/constructor) at MDN
+- [`Object.prototype.constructor`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/constructor) на MDN
 - [**19.1.3.1** Object.prototype.constructor](https://www.ecma-international.org/ecma-262/#sec-object.prototype.constructor)
 
-## Object as a key of object's property
+## Об'єкт як ключ властивості об'єкта
 
 ```js
 { [{}]: {} } // -> { '[object Object]': {} }
@@ -1023,9 +1025,9 @@ An `Object.prototype.constructor` returns a reference to the `Object` constructo
 
 ### 💡 Пояснення:
 
-Why does this work so? Here we're using a _Computed property name_. When you pass an object between those brackets, it coerces object to a string, so we get the property key `'[object Object]'` and the value `{}`.
+Чому це так працює? Тут ми використовуємо _Computed property name_. Коли ви передаєте об'єкт між цими дужками, він перетворює об'єкт у строку, тому ми отримуємо ключ властивості `'[object Object]'` і значення `{}`
 
-We can make "brackets hell" like this:
+Ми можемо написати "дужкове пекло":
 
 ```js
 ({ [{}]: { [{}]: {} } }[{}][{}]); // -> {}
@@ -1038,14 +1040,14 @@ We can make "brackets hell" like this:
 // }
 ```
 
-Read more about object literals here:
+Детальніше про літерали об’єктів читайте тут:
 
 - [Object initializer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer) at MDN
 - [**12.2.6** Object Initializer](http://www.ecma-international.org/ecma-262/6.0/#sec-object-initializer)
 
-## Accessing prototypes with `__proto__`
+## Доступ до прототипів за допомогою `__proto__`
 
-As we know, primitives don't have prototypes. However, if we try to get a value of `__proto__` for primitives, we would get this:
+Як ми знаємо, примітиви не мають прототипів. Однак, якщо ми спробуємо отримати значення `__proto__` для примітивів, ми отримаємо таке:
 
 ```js
 (1).__proto__.__proto__.__proto__; // -> null
@@ -1053,7 +1055,7 @@ As we know, primitives don't have prototypes. However, if we try to get a value 
 
 ### 💡 Пояснення:
 
-This happens because when something doesn't have a prototype, it will be wrapped into a wrapper object using the `ToObject` method. So, step-by-step:
+Це трапляється тому, що коли щось не має прототипу, воно буде загорнуто в обгортковий об'єкт за допомогою методу `ToObject`. Отже, покроково:
 
 ```js
 (1)
@@ -1067,20 +1069,20 @@ This happens because when something doesn't have a prototype, it will be wrapped
   ).__proto__.__proto__.__proto__; // -> null
 ```
 
-Here is more information about `__proto__`:
+Ось додаткова інформація про `__proto__`:
 
 - [**B.2.2.1** Object.prototype.**proto**](https://www.ecma-international.org/ecma-262/#sec-object.prototype.__proto__)
 - [**7.1.13** ToObject(`argument`)](https://www.ecma-international.org/ecma-262/#sec-toobject)
 
 ## `` `${{Object}}` ``
 
-What is the result of the expression below?
+Який результат виразу нижче?
 
 ```js
 `${{ Object }}`;
 ```
 
-The answer is:
+Відповідь:
 
 ```js
 // -> '[object Object]'
@@ -1088,7 +1090,7 @@ The answer is:
 
 ### 💡 Пояснення:
 
-We defined an object with a property `Object` using _Shorthand property notation_:
+Ми визначили об'єкт із властивістю `Object`, використовуючи _Shorthand property notation_:
 
 ```js
 {
@@ -1096,14 +1098,14 @@ We defined an object with a property `Object` using _Shorthand property notation
 }
 ```
 
-Then we've passed this object to the template literal, so the `toString` method calls for that object. That's why we get the string `'[object Object]'`.
+Потім ми передали цей об'єкт до літералу шаблону, тому метод `toString` викликає цей об'єкт. Ось чому ми отримуємо рядок `'[object Object]'`.
 
 - [**12.2.9** Template Literals](https://www.ecma-international.org/ecma-262/#sec-template-literals)
 - [Object initializer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer) at MDN
 
-## Destructuring with default values
+## Деструктуризація зі значеннями за замовчуванням
 
-Consider this example:
+Розглянемо цей приклад:
 
 ```js
 let x,
@@ -1111,7 +1113,7 @@ let x,
 y;
 ```
 
-The example above is a great task for an interview. What the value of `y`? The answer is:
+Наведений вище приклад є чудовим завданням для співбесіди. Яке значення `y`? Відповідь така:
 
 ```js
 // -> 1
@@ -1127,12 +1129,12 @@ y;
 //  1       3           2    4
 ```
 
-With the example above:
+З наведеним вище прикладом:
 
-1. We declare `x` with no value, so it's `undefined`.
-2. Then we pack the value of `x` into the object property `x`.
-3. Then we extract the value of `x` using destructuring and want to assign it to `y`. If the value is not defined, then we're going to use `1` as the default value.
-4. Return the value of `y`.
+1. Ми оголошуємо `x` без значення, тому воно є `undefined`.
+2. Потім ми запаковуємо значення `x` у властивість об'єкта` x`.
+3. Потім ми витягуємо значення `x`, використовуючи деструктурування, і хочемо призначити його` y`. Якщо значення не визначено, тоді ми будемо використовувати `1` як значення за замовчуванням.
+4. Повертаємо значення `y`.
 
 - [Object initializer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer) at MDN
 
